@@ -4,7 +4,7 @@
 
 If you would like to run the notebooks locally, without installing Python and .NET interactive, you can clone this repository and then run docker-compose:
 ```shell
-git clone git@github.com:https://github.com/plbonneville/programmation-avancee-csharp.git
+git clone https://github.com/plbonneville/programmation-avancee-csharp.git
 cd programmation-avancee-csharp
 docker-compose up
 ```
