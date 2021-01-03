@@ -1,4 +1,6 @@
-# programmation-avancee-csharp
+#  Programmation avancée en C#
+
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/plbonneville/programmation-avancee-csharp/main)
 
 ## Run the notebooks locally
 
