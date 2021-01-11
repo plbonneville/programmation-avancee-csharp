@@ -1,12 +1,13 @@
 # programmation-avancee-csharp
 
-## Run the notebooks locally
+## Exécutez les notebooks localement
 
-If you would like to run the notebooks locally, without installing Python and .NET interactive, you can clone this repository and then run docker-compose:
+Si vous souhaitez exécuter les notebooks (calepins électroniques) localement, sans installer `Python` et `.NET interactive`, vous pouvez cloner ce `repository` et ensuite exécuter la commande `docker-compose`:
+
 ```shell
 git clone git@github.com:https://github.com/plbonneville/programmation-avancee-csharp.git
 cd programmation-avancee-csharp
 docker-compose up
 ```
 
-The notebooks run by default on network port 8888.
+Les notebooks opèrent par défaut sur le port réseau 8888.

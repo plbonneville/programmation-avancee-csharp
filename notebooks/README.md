@@ -1,3 +1,3 @@
-# Interactive Notebooks demonstrating C# language features
+# Notebooks interactifs (calepins électroniques) pour le cours de programmation avancée
 
-This is a collection of notebooks, one for each stream where we discuss C# language features and programming techniques
+Voici la collection des notebooks que nous explorerons au cours du semetre.
