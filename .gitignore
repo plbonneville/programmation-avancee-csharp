@@ -352,3 +352,6 @@ MigrationBackup/
 
 # ignore Jupyter notebook temp folder
 .ipynb_checkpoints/
+
+# local information and instructions
+info.md
