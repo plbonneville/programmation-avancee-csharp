@@ -15,42 +15,34 @@ RUN apt-get update
 RUN apt-get install -y curl
 
 ENV \
-    # Enable detection of running in a container
-    DOTNET_RUNNING_IN_CONTAINER=true \
-    # Enable correct mode for dotnet watch (only mode supported in a container)
-    DOTNET_USE_POLLING_FILE_WATCHER=true \
-    # Skip extraction of XML docs - generally not useful within an image/container - helps performance
-    NUGET_XMLDOC_MODE=skip \
-    # Opt out of telemetry until after we install jupyter when building the image, this prevents caching of machine id
-    DOTNET_INTERACTIVE_CLI_TELEMETRY_OPTOUT=true
+  # Enable detection of running in a container
+  DOTNET_RUNNING_IN_CONTAINER=true \
+  # Enable correct mode for dotnet watch (only mode supported in a container)
+  DOTNET_USE_POLLING_FILE_WATCHER=true \
+  # Skip extraction of XML docs - generally not useful within an image/container - helps performance
+  NUGET_XMLDOC_MODE=skip \
+  # Opt out of telemetry until after we install jupyter when building the image, this prevents caching of machine id
+  DOTNET_INTERACTIVE_CLI_TELEMETRY_OPTOUT=true
 
 # Install .NET CLI dependencies
 RUN apt-get update \
-    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-    libc6 \
-    libgcc1 \
-    libgssapi-krb5-2 \
-    libicu66 \
-    libssl1.1 \
-    libstdc++6 \
-    zlib1g \
-    && rm -rf /var/lib/apt/lists/*
+  && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+  libc6 \
+  libgcc1 \
+  libgssapi-krb5-2 \
+  libicu70 \
+  libssl3 \
+  libstdc++6 \
+  zlib1g \
+  && rm -rf /var/lib/apt/lists/*
 
-# Install .NET Core SDK
+# Install the appropriate dotnet SDK
+ENV DOTNET_SDK_VERSION 7.0.101
+RUN curl -L https://dot.net/v1/dotnet-install.sh | bash -e -s -- --install-dir /usr/share/dotnet --version $DOTNET_SDK_VERSION \
+  && ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet
 
-# When updating the SDK version, the sha512 value a few lines down must also be updated.
-ENV DOTNET_SDK_VERSION 6.0.102
-
-RUN dotnet_sdk_version=6.0.102 \
-    && curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-x64.tar.gz \
-    && dotnet_sha512='EDD79EBAD3327032EA0AAA8504C14E3270050BB459B098202676776B41A3A1D282AAEFD1E5E8AA09EF7F7CF7C4601C4783A57112FF6E3D427507E8EEC2BFB748' \
-    && echo "$dotnet_sha512 dotnet.tar.gz" | sha512sum -c - \
-    && mkdir -p /usr/share/dotnet \
-    && tar -ozxf dotnet.tar.gz -C /usr/share/dotnet \
-    && rm dotnet.tar.gz \
-    && ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet \
-    # Trigger first run experience by running arbitrary cmd
-    && dotnet help
+# Trigger first run experience by running arbitrary command
+RUN dotnet help
 
 # Copy package sources
 COPY ./NuGet.config ${HOME}/nuget.config
