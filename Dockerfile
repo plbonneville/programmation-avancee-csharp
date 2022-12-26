@@ -1,4 +1,4 @@
-FROM plbonneville/csharpnotebook:6.0.100
+FROM plbonneville/csharpnotebook:7.0.101
 
 # Set the environment variables
 ARG NB_USER=jovyan
